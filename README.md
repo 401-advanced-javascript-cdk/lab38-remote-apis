@@ -1,52 +1,45 @@
-# Lab36 - Redux Assignment 2 - Reducers
+# Lab38 - Remote APIs with Redux
 
-Redux implementation with multiple reducers
+Implements asyncronous actions for API calls.
 
 ### Author: Chris Kozlowski
 
 ### Links and Resources
 
-- [GitHub PR](https://github.com/401-advanced-javascript-cdk/lab36-state-reducers/pull/1)
-- [Netlify Deployment](https://keen-joliot-24ce61.netlify.com)
+- [GitHub PR](https://github.com/401-advanced-javascript-cdk/lab38-remote-apis/pull/1)
+- [Netlify Deployment](https://fervent-ritchie-937f67.netlify.com)
 
 ### Modules
 
 #### `index.js`
 
-Gets the root element in the HTML and renders the App component wrapped in the store provider.
+Gets the root element in the HTML and renders the App component wrapped in the store provider
 
 #### `app.js`
 
-Renders a div that displays a name  and contains a dispatch method from store props.  Renders the Numbers component.
-
-#### `numbers.js`
-
-Connects to the store and renders two divs.  One displays the number from store props.  The other calls a store action when clicked that resets the number to its initial state.
+Connects to the store and maps the store state and dispatch to props.  Renders the section with the information from peopleReducer and personReducer
 
 #### `store/index.js`
 
-Exports the createStore method with the app and numbers reducers combined.
+Creates the store from the combined reducers.
 
-#### `store/app-reducers.js`
+#### `store/people-reducer.js`
 
-Holds logic that is triggered on a 'CHANGE' action type.
+Handles the syncronous 'SEND_PEOPLE_RESULTS' action.
 
-#### `store/numbers-reducers.js`
+#### `store/person-reducer.js`
 
-Holds logic that is triggered on a 'CHANGE' or 'RESET' action type.
+Handles the syncronous 'SEND_PEOPLE_RESULTS' and 'SEND_PERSON_RESULTS' actions.
 
-#### `store/app-actions.js`
+#### `store/people-actions.js`
+Exports an asyncronous action that performs the API call for the list of people and the syncronous action for setting it to the store's state with the reducer.
 
-Exports the 'CHANGE' action.
+#### `store/people-actions.js`
+Exports an asyncronous action that performs the API call for the individual person's stats and the syncronous action for setting it to the store's state with the reducer.
 
-#### `store/numbers-actions.js`
+#### `store/middleware/thunk.js`
+Checks if an action is a function or an object.  If its a function it gets called by the store, if its an object next is called with the action.
 
-Exports the 'RESET' action.
+### Operation
 
-#### `store/middleware/reporter.js`
-
-Creates a log on any action.
-
-#### Operation
-
-Go to the deployment [here](https://keen-joliot-24ce61.netlify.com).  Clicking on the NAME text will activate the 'CHANGE' action, changing the name to a random name and the number to a random number, both of which originate from the store's state.  Clicking the RESET div will activate the 'RESET' action, setting the number onlt to its initial state.
+Go to the deployment [here](https://fervent-ritchie-937f67.netlify.com).  Clicking the button quries the StarWars API for a list of people.  Clicking on a single person displays their stats.  People are saved in the store as they're viewed, so clicking them again shows their data from the store state without another API call.
